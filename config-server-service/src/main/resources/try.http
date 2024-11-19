@@ -4,4 +4,4 @@ GET https://examples.http-client.intellij.net/get
 
 ###
 
-GET localhost:8888/person/default
+GET localhost:8888/person/dev
