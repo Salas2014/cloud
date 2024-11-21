@@ -1,6 +1,7 @@
 package org.example.noteservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.example.noteservice.domain.Note;
 import org.example.noteservice.repo.NoteRepository;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +15,11 @@ public class NoteController {
 
     private final NoteRepository noteRepository;
 
+    @SneakyThrows
     @GetMapping("{personId}")
     public List<Note> findByPersonId(@PathVariable Long personId) {
-        List<Note> allByPersonId = noteRepository.findAllByPersonId(personId);
-        System.out.println(allByPersonId);
-        return allByPersonId;
+        Thread.sleep(2500);
+        return noteRepository.findAllByPersonId(personId);
     }
 
     @PostMapping

@@ -9,7 +9,6 @@ import org.salas.person.service.repo.PersonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +17,19 @@ public class PersonService {
     private final FeignNoteClient feignNoteClient;
     private final PersonRepository personRepository;
 
+
     public PersonDto findAllWithNotes(Long personId) {
         Person person = personRepository.findById(personId).orElseThrow();
-        List<Note> allNoteByPersonId = feignNoteClient.findAllNoteByPersonId(personId);
+
+        List<Note> allNoteByPersonId = getNotes(personId);
         System.out.println(allNoteByPersonId);
         return new PersonDto(person.getFirstName(), person.getLastName(), allNoteByPersonId);
     }
+
+    public List<Note> getNotes(Long personId) {
+        return feignNoteClient.findAllNoteByPersonId(personId);
+    }
+
 
     public Person savePerson(Person person) {
         return personRepository.save(person);
